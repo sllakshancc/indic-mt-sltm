@@ -20,6 +20,25 @@ class GPETokenizer:
         self.merges = {}      # (id1, id2) -> new_id
         self.trained = False
 
+        # Special tokens
+        self.special_tokens = {
+            "[PAD]": 0,
+            "[UNK]": 1,
+            "[BOS]": 2,
+            "[EOS]": 3
+        }
+
         # Regex pattern for text chunking
         #self.whitespace_pattern = r"\w+|[^\w\s]"
         self.whitespace_pattern = r" ?\w+| ?[^\w\s]+"
+
+        # HF compatibility attributes
+        self.pad_token = "[PAD]"
+        self.unk_token = "[UNK]"
+        self.bos_token = "[BOS]"
+        self.eos_token = "[EOS]"
+
+        self.pad_token_id = 0
+        self.unk_token_id = 1
+        self.bos_token_id = 2
+        self.eos_token_id = 3
