@@ -42,3 +42,68 @@ class GPETokenizer:
         self.unk_token_id = 1
         self.bos_token_id = 2
         self.eos_token_id = 3
+
+    def train(self, texts):
+        """Train tokenizer on list of text strings."""
+        print(f"Training GPE tokenizer on {len(texts)} texts...")
+
+        # Initialize vocab with special tokens
+        self.vocab = {v: k for k, v in self.special_tokens.items()}
+        self.vocab_re = self.special_tokens.copy()
+
+
+        # Collect initial graphemes
+        initial_graphemes = set()
+        for text in tqdm.tqdm(texts, desc="Collecting graphemes"):  # Limit for speed texts[:10000]
+            text_chunks = regex.findall(self.whitespace_pattern, text)
+            text_chunks = [t.replace(" ", " ") for t in text_chunks if t.strip()]
+
+            for chunk in text_chunks:
+                graphemes_list = list(grapheme.graphemes(chunk))
+                initial_graphemes.update(graphemes_list)
+
+        # Add graphemes to vocab
+        current_id = len(self.vocab)
+        for g in sorted(initial_graphemes):
+            if g not in self.vocab_re:
+                self.vocab[current_id] = g
+                self.vocab_re[g] = current_id
+                current_id += 1
+
+        print(f"Initial vocab size: {len(self.vocab)}")
+
+        # Calculate number of merges needed
+        #num_merges = min(self.vocab_size - len(self.vocab), 5000)  # Cap merges for speed min(self.vocab_size - len(self.vocab), 5000)
+        num_merges = self.vocab_size - len(self.vocab)  # Cap merges for speed min(self.vocab_size - len(self.vocab), 5000)
+
+        # Convert texts to IDs for merging
+        ids_list = self._convert_to_ids_train(texts)  # Limit for speed texts[:10000]
+
+        # Perform merges
+        for i in tqdm.tqdm(range(num_merges), desc="Merging"):
+            stats = {}
+            for chunk_ids in ids_list:
+                self._get_stats(chunk_ids, stats)
+
+            if not stats:
+                break
+
+            pair = max(stats, key=stats.get)
+            idx = len(self.vocab)
+
+            # Update IDs with merge
+            ids_list = [self._merge(chunk_ids, pair, idx) for chunk_ids in ids_list]
+
+            # Record merge
+            self.merges[pair] = idx
+            self.vocab[idx] = self.vocab[pair[0]] + self.vocab[pair[1]]
+
+            if i % 100 == 0:
+                print(f"Merge {i}: {self.vocab[pair[0]]} + {self.vocab[pair[1]]} -> {self.vocab[idx]}")
+
+        # Update reverse vocab
+        self.vocab_re = {v: k for k, v in self.vocab.items()}
+
+        print(f"Training complete. Final vocab size: {len(self.vocab)}")
+        self.trained = True
+
