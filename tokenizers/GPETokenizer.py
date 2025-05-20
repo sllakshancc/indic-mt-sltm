@@ -112,3 +112,49 @@ class GPETokenizer:
         print(f"Training complete. Final vocab size: {len(self.vocab)}")
         self.trained = True
 
+    def save_pretrained_tokenizer_json(self, path="tokenizer.json"):
+        """
+        Save this GPE tokenizer in HuggingFace PreTrainedTokenizerFast-compatible JSON format
+        """
+
+        if not self.trained:
+            raise ValueError("Tokenizer must be trained before saving.")
+
+        # merges are inserted in training order
+        merges = [
+            [self.vocab[id1], self.vocab[id2]]
+            for (id1, id2), _ in self.merges.items()
+        ]
+
+        # -------------------------
+        # Final tokenizer.json
+        # -------------------------
+        tokenizer_json = {
+            "version": "1.0",
+            "truncation": None,
+            "padding": None,
+            "added_tokens": added_tokens,
+            "normalizer": None,
+            "pre_tokenizer": {
+                "type": "Whitespace"
+            },
+            "post_processor": None,
+            "decoder": None,
+            "model": {
+                "type": "BPE",
+                "dropout": None,
+                "unk_token": self.unk_token,
+                "continuing_subword_prefix": self.dummy_prefix,
+                "end_of_word_suffix": None,
+                "fuse_unk": False,
+                "byte_fallback": False,
+                "ignore_merges": False,
+                "vocab": self.vocab_re,
+                "merges": merges
+            }
+        }
+
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(tokenizer_json, f, ensure_ascii=False, indent=2)
+
+        print(f"Tokenizer saved to {path}")
