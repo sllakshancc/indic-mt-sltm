@@ -120,6 +120,22 @@ class GPETokenizer:
         if not self.trained:
             raise ValueError("Tokenizer must be trained before saving.")
 
+        # -------------------------
+        # Build vocab: token -> id
+        # -------------------------
+        #vocab_token_to_id = {token: idx for idx, token in self.vocab.items()}
+
+        # -------------------------
+        # Build merges: list of [token1, token2]
+        # Order matters → sort by merged id
+        # -------------------------
+        # merges = []
+        # for (id1, id2), new_id in sorted(self.merges.items(), key=lambda x: x[1]):
+        #     merges.append([
+        #         self.vocab[id1],
+        #         self.vocab[id2]
+        #     ])
+
         # merges are inserted in training order
         merges = [
             [self.vocab[id1], self.vocab[id2]]
