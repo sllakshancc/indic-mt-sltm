@@ -143,6 +143,21 @@ class GPETokenizer:
         ]
 
         # -------------------------
+        # Added special tokens
+        # -------------------------
+        added_tokens = []
+        for token, idx in self.special_tokens.items():
+            added_tokens.append({
+                "id": idx,
+                "content": token,
+                "single_word": False,
+                "lstrip": False,
+                "rstrip": False,
+                "normalized": False,
+                "special": True
+            })
+
+        # -------------------------
         # Final tokenizer.json
         # -------------------------
         tokenizer_json = {
