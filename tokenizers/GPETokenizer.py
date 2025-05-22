@@ -189,3 +189,30 @@ class GPETokenizer:
             json.dump(tokenizer_json, f, ensure_ascii=False, indent=2)
 
         print(f"Tokenizer saved to {path}")
+
+    def encode(self, text, add_special_tokens=True, max_length=None, truncation=False, padding=False):
+        """Encode text to token IDs."""
+        if not self.trained:
+            raise ValueError("Tokenizer not trained")
+
+        # Handle batch input
+        if isinstance(text, list):
+            return [self.encode(t, add_special_tokens, max_length, truncation, padding) for t in text]
+
+        # Process text
+        text_chunks = regex.findall(self.whitespace_pattern, text)
+        text_chunks = [t.replace(" ", "▁") for t in text_chunks if t.strip()]
+
+        ids = []
+        for chunk in text_chunks:
+            graphemes_list = list(grapheme.graphemes(chunk))
+            for g in graphemes_list:
+                if g in self.vocab_re:
+                    ids.append(self.vocab_re[g])
+                else:
+                    ids.append(self.unk_token_id)
+
+        # Apply merges
+        ids = self._apply_merges(ids)
+
+        return ids
