@@ -215,4 +215,8 @@ class GPETokenizer:
         # Apply merges
         ids = self._apply_merges(ids)
 
+        # Add special tokens
+        if add_special_tokens:
+            ids = [self.bos_token_id] + ids + [self.eos_token_id]
+        
         return ids
