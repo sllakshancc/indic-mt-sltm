@@ -229,3 +229,18 @@ class GPETokenizer:
                 ids = ids + [self.pad_token_id] * (max_length - len(ids))
 
         return ids
+
+    def decode(self, ids, skip_special_tokens=True):
+        """Decode token IDs to text."""
+        if isinstance(ids[0], list):
+            return [self.decode(i, skip_special_tokens) for i in ids]
+
+        tokens = []
+        for i in ids:
+            if skip_special_tokens and i in [0, 1, 2, 3]:
+                continue
+            if i in self.vocab:
+                tokens.append(self.vocab[i])
+
+        text = "".join(tokens).replace("▁", " ")
+        return text.strip()
