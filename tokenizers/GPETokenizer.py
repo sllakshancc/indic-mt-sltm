@@ -252,8 +252,35 @@ class GPETokenizer:
     def __len__(self):
         """Return vocabulary size."""
         return len(self.vocab)
-        
+
     def tokenize(self, text):
         """Tokenize text into subword strings."""
         ids = self.encode(text, add_special_tokens=False)
         return [self.vocab.get(i, self.unk_token) for i in ids]
+
+    def save(self, path):
+        """Save tokenizer to disk."""
+        os.makedirs(path, exist_ok=True)
+
+        save_dict = {
+            'vocab': self.vocab,
+            'merges': self.merges,
+            'special_tokens': self.special_tokens,
+            'vocab_size': self.vocab_size
+        }
+
+        with open(os.path.join(path, 'gpe_tokenizer.pkl'), 'wb') as f:
+            pickle.dump(save_dict, f)
+
+        # Save config for HF compatibility
+        config = {
+            'tokenizer_class': 'GPETokenizerHF',
+            'vocab_size': len(self.vocab),
+            'pad_token': self.pad_token,
+            'unk_token': self.unk_token,
+            'bos_token': self.bos_token,
+            'eos_token': self.eos_token
+        }
+
+        with open(os.path.join(path, 'tokenizer_config.json'), 'w') as f:
+            json.dump(config, f)
