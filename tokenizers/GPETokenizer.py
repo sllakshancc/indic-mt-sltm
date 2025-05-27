@@ -252,3 +252,8 @@ class GPETokenizer:
     def __len__(self):
         """Return vocabulary size."""
         return len(self.vocab)
+        
+    def tokenize(self, text):
+        """Tokenize text into subword strings."""
+        ids = self.encode(text, add_special_tokens=False)
+        return [self.vocab.get(i, self.unk_token) for i in ids]
