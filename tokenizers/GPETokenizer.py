@@ -284,3 +284,16 @@ class GPETokenizer:
 
         with open(os.path.join(path, 'tokenizer_config.json'), 'w') as f:
             json.dump(config, f)
+
+    def load(self, path):
+        """Load tokenizer from disk."""
+        with open(os.path.join(path, 'gpe_tokenizer.pkl'), 'rb') as f:
+            save_dict = pickle.load(f)
+
+        self.vocab = save_dict['vocab']
+        self.merges = save_dict['merges']
+        self.special_tokens = save_dict['special_tokens']
+        self.vocab_size = save_dict['vocab_size']
+
+        self.vocab_re = {v: k for k, v in self.vocab.items()}
+        self.trained = True
