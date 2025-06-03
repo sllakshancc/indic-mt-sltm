@@ -297,3 +297,10 @@ class GPETokenizer:
 
         self.vocab_re = {v: k for k, v in self.vocab.items()}
         self.trained = True
+
+    # Helper methods
+    def _get_stats(self, ids, counts=None):
+        counts = {} if counts is None else counts
+        for pair in zip(ids, ids[1:]):
+            counts[pair] = counts.get(pair, 0) + 1
+        return counts
