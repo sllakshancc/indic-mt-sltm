@@ -276,10 +276,6 @@ class GPETokenizer:
         config = {
             'tokenizer_class': 'GPETokenizerHF',
             'vocab_size': len(self.vocab),
-            'pad_token': self.pad_token,
-            'unk_token': self.unk_token,
-            'bos_token': self.bos_token,
-            'eos_token': self.eos_token
         }
 
         with open(os.path.join(path, 'tokenizer_config.json'), 'w') as f:
