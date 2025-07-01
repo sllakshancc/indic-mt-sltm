@@ -1,13 +1,11 @@
 from datasets import load_dataset
+from tokenizers import Tokenizer, models, trainers, pre_tokenizers
 
 ds = load_dataset("Helsinki-NLP/opus-100", "en-si", cache_dir="./hf_cache")
 
-print(ds)
-print(ds["train"]["translation"][0])
-
 train_texts_si = [ex["si"] for ex in ds["train"]["translation"]]
 
-from tokenizers import Tokenizer, models, trainers, pre_tokenizers
+
 
 # Sinhala tokenizer
 tokenizer_si = Tokenizer(models.BPE())
