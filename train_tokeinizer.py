@@ -42,3 +42,19 @@ print(f"Tokens: {tokens}")
 # 6. Save and load the tokenizer
 tokenizer.save_pretrained_tokenizer_json("my_tokenizer.json")  # Saves vocab and config
 
+from transformers import PreTrainedTokenizerFast
+
+tok_en = PreTrainedTokenizerFast(tokenizer_file="my_tokenizer.json")
+
+
+text = "මම ගෙදර යනවා."
+token_ids = tok_en.encode(text)
+print(f"Encoded: {token_ids}")
+
+# 3. Decode token IDs back to text
+decoded_text = tok_en.decode(token_ids)
+print(f"Decoded: {decoded_text}")
+
+# 4. Tokenize text into subword strings
+tokens = tok_en.tokenize(text)
+print(f"Tokens: {tokens}")
