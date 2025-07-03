@@ -14,4 +14,31 @@ trainer_si = trainers.BpeTrainer(special_tokens=["[PAD]", "[UNK]", "[BOS]", "[EO
 tokenizer_si.train_from_iterator(train_texts_si[:10], trainer=trainer_si)
 
 # Save tokenizers
-tokenizer_si.save("tokenizer_si.json")
+#tokenizer_si.save("tokenizer_si.json")
+
+import sys
+sys.path.insert(0, 'tokenizers')
+from GPETokenizer import GPETokenizer
+
+# 1. Create and train a tokenizer
+tokenizer = GPETokenizer(vocab_size=4000, dummy_prefix=None)
+
+# Train the tokenizer
+tokenizer.train(train_texts_si[:100000])
+
+# 2. Encode text to token IDs
+text = "මම ගෙදර යනවා."
+token_ids = tokenizer.encode(text)
+print(f"Encoded: {token_ids}")
+
+# 3. Decode token IDs back to text
+decoded_text = tokenizer.decode(token_ids)
+print(f"Decoded: {decoded_text}")
+
+# 4. Tokenize text into subword strings
+tokens = tokenizer.tokenize(text)
+print(f"Tokens: {tokens}")
+
+# 6. Save and load the tokenizer
+tokenizer.save_pretrained_tokenizer_json("my_tokenizer.json")  # Saves vocab and config
+
