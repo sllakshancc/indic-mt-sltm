@@ -44,7 +44,8 @@ tokenizer.save_pretrained_tokenizer_json("my_tokenizer.json")  # Saves vocab and
 
 from transformers import PreTrainedTokenizerFast
 
-tok_en = PreTrainedTokenizerFast(tokenizer_file="my_tokenizer.json")
+tok_en = PreTrainedTokenizerFast(tokenizer_file="my_tokenizer.json", bos_token="[BOS]", eos_token="[EOS]",
+                                 unk_token="[UNK]", pad_token="[PAD]")
 
 
 text = "මම ගෙදර යනවා."
