@@ -7,12 +7,6 @@ train_texts_si = [ex["si"] for ex in ds["train"]["translation"]]
 
 
 
-# Sinhala tokenizer
-tokenizer_si = Tokenizer(models.BPE())
-tokenizer_si.pre_tokenizer = pre_tokenizers.Whitespace()
-trainer_si = trainers.BpeTrainer(special_tokens=["[PAD]", "[UNK]", "[BOS]", "[EOS]"], vocab_size=50)
-tokenizer_si.train_from_iterator(train_texts_si[:10], trainer=trainer_si)
-
 # Save tokenizers
 #tokenizer_si.save("tokenizer_si.json")
 
