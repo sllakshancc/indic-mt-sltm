@@ -92,10 +92,13 @@ class GPETokenizer:
             self.merges[pair] = idx
             self.vocab[idx] = self.vocab[pair[0]] + self.vocab[pair[1]]
 
+            if i % 100 == 0:
+                print(f"Merge {i}: {self.vocab[pair[0]]} + {self.vocab[pair[1]]} -> {self.vocab[idx]}")
 
         # Update reverse vocab
         self.vocab_re = {v: k for k, v in self.vocab.items()}
 
+        print(f"Training complete. Final vocab size: {len(self.vocab)}")
         self.trained = True
 
 
