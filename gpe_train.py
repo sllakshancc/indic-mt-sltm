@@ -37,6 +37,16 @@ class GPETokenizer:
         #self.whitespace_pattern = r"\w+|[^\w\s]"
         self.whitespace_pattern = r" ?\w+| ?[^\w\s]+"
 
+        # HF compatibility attributes
+        self.pad_token = "[PAD]"
+        self.unk_token = "[UNK]"
+        self.bos_token = "[BOS]"
+        self.eos_token = "[EOS]"
+
+        self.pad_token_id = 0
+        self.unk_token_id = 1
+        self.bos_token_id = 2
+        self.eos_token_id = 3
 
     def train(self, texts):
         """Train tokenizer on list of text strings."""
