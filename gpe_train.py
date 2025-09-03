@@ -46,6 +46,11 @@ class GPETokenizer:
         self.vocab = {v: k for k, v in self.special_tokens.items()}
         self.vocab_re = self.special_tokens.copy()
 
+        # Preprocess texts
+        if self.dummy_prefix:
+            texts = [self.dummy_prefix + regex.sub(r"\s+", " ", t.strip()) for t in texts]
+        else:
+            texts = [regex.sub(r"\s+", " ", t.strip()) for t in texts]
 
         # Collect initial graphemes
         initial_graphemes = set()
