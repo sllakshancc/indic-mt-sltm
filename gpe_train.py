@@ -32,6 +32,13 @@ class GPETokenizer:
         self.merges = {}      # (id1, id2) -> new_id
         self.trained = False
 
+        # Special tokens
+        self.special_tokens = {
+            "[PAD]": 0,
+            "[UNK]": 1,
+            "[BOS]": 2,
+            "[EOS]": 3
+        }
 
         # Regex pattern for text chunking
         #self.whitespace_pattern = r"\w+|[^\w\s]"
