@@ -123,6 +123,28 @@ class GPETokenizer:
         print(f"Training complete. Final vocab size: {len(self.vocab)}")
         self.trained = True
 
+    def encode(self, text, add_special_tokens=True, max_length=None, truncation=False, padding=False):
+        """Encode text to token IDs."""
+
+
+        # Process text
+        text_chunks = regex.findall(self.whitespace_pattern, text)
+        text_chunks = [t.replace(" ", "▁") for t in text_chunks if t.strip()]
+
+        ids = []
+        for chunk in text_chunks:
+            graphemes_list = list(grapheme.graphemes(chunk))
+            for g in graphemes_list:
+                if g in self.vocab_re:
+                    ids.append(self.vocab_re[g])
+                else:
+                    ids.append(self.unk_token_id)
+
+
+
+
+
+        return ids
 
 
 
