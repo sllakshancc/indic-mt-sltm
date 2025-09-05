@@ -148,6 +148,34 @@ class GPETokenizer:
 
 
 
+# Process datasets
+print("Encoding training dataset...")
+train_ds = ds["train"].map(
+    lambda x: encode_batch(x["translation"]),
+)
+
+print("Encoding validation dataset...")
+val_ds = ds["validation"].map(
+    lambda x: encode_batch(x["translation"]),
+)
+
+# Set format for PyTorch
+train_ds.set_format(type="torch")
+val_ds.set_format(type="torch")
+
+print(f"Encoded train samples: {len(train_ds)}")
+print(f"Encoded val samples: {len(val_ds)}")
+
+batch = [ {"en": "Hello world!", "si": "හෙලෝ ලෝකය!"} ]
+encoded = encode_batch(batch)
+print({k: v.shape for k, v in encoded.items()})
+
+print(train_ds[0]['input_ids'].shape)  # should be torch.Size([64])
+print(train_ds[0]['labels'].shape)     # should be torch.Size([64])
+
+# Check token ranges (not all 0s or 1s)
+print(train_ds[0]['input_ids'][:10])
+print(train_ds[0]['labels'][:10])
 
 
 
