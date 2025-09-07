@@ -126,6 +126,9 @@ class GPETokenizer:
     def encode(self, text, add_special_tokens=True, max_length=None, truncation=False, padding=False):
         """Encode text to token IDs."""
 
+        # Handle batch input
+        if isinstance(text, list):
+            return [self.encode(t, add_special_tokens, max_length, truncation, padding) for t in text]
 
         # Process text
         text_chunks = regex.findall(self.whitespace_pattern, text)
