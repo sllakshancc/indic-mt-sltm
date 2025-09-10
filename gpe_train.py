@@ -148,6 +148,10 @@ class GPETokenizer:
 
 
 
+        # Padding
+        if padding and max_length:
+            if len(ids) < max_length:
+                ids = ids + [self.pad_token_id] * (max_length - len(ids))
 
         return ids
 
