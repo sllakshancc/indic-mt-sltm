@@ -147,6 +147,9 @@ class GPETokenizer:
 
 
 
+        # Truncation
+        if truncation and max_length and len(ids) > max_length:
+            ids = ids[:max_length]
 
         # Padding
         if padding and max_length:
