@@ -146,6 +146,9 @@ class GPETokenizer:
                     ids.append(self.unk_token_id)
 
 
+        # Add special tokens
+        if add_special_tokens:
+            ids = [self.bos_token_id] + ids + [self.eos_token_id]
 
         # Truncation
         if truncation and max_length and len(ids) > max_length:
