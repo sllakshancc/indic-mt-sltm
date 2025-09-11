@@ -224,6 +224,51 @@ print(train_ds[0]['input_ids'][:10])
 print(train_ds[0]['labels'][:10])
 
 
+from transformers import EncoderDecoderModel, BertConfig, BertModel, EncoderDecoderConfig
+
+# Encoder config (English)
+encoder_config = BertConfig(
+    vocab_size=len(tokenizer_en),
+    hidden_size=256,
+    num_hidden_layers=4,
+    num_attention_heads=4,
+    intermediate_size=512,
+    max_position_embeddings=128,
+)
+
+# Decoder config (Sinhala) – note: add_is_decoder & cross-attention
+decoder_config = BertConfig(
+    vocab_size=len(tokenizer_si),
+    hidden_size=256,
+    num_hidden_layers=4,
+    num_attention_heads=4,
+    intermediate_size=512,
+    max_position_embeddings=128,
+    is_decoder=True,
+    add_cross_attention=True,
+)
+
+#model = EncoderDecoderModel.from_encoder_decoder_config(
+#    encoder_config=encoder_config,
+#    decoder_config=decoder_config
+#)
+
+# Build encoder-decoder model
+#encoder_model = BertModel(config=encoder_config)
+#decoder_model = BertModel(config=decoder_config)
+
+#model = EncoderDecoderModel(encoder=encoder_model, decoder=decoder_model)
+#model = EncoderDecoderModel(encoder=encoder_config, decoder=decoder_config)
+config = EncoderDecoderConfig.from_encoder_decoder_configs(encoder_config, decoder_config)
+model = EncoderDecoderModel(config=config)
+
+# Tie embeddings to reduce params (optional but helps)
+model.config.decoder_start_token_id = tokenizer_si.bos_token_id
+model.config.pad_token_id = tokenizer_si.pad_token_id
+
+
+# Print model config (layers, heads, hidden sizes, etc.)
+print(model)
 
 
 
