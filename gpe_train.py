@@ -290,6 +290,9 @@ training_args = Seq2SeqTrainingArguments(
     logging_steps=500,
     save_steps=1000,
     eval_steps=1000,
+    num_train_epochs=1,  # for demo, increase for real
+    fp16=torch.cuda.is_available(),
+    report_to=[],
 )
 
 
