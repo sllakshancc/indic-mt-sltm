@@ -277,6 +277,20 @@ model.config.pad_token_id = tokenizer_si.pad_token_id
 print(model)
 
 
+from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer, DataCollatorForSeq2Seq
+
+batch_size = 16
+
+training_args = Seq2SeqTrainingArguments(
+    output_dir="./results",
+    eval_strategy="steps",
+    per_device_train_batch_size=batch_size,
+    per_device_eval_batch_size=batch_size,
+    predict_with_generate=True,
+    logging_steps=500,
+    save_steps=1000,
+    eval_steps=1000,
+)
 
 
 
