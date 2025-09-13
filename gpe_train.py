@@ -234,6 +234,9 @@ encoder_config = BertConfig(
     num_attention_heads=4,
     intermediate_size=512,
     max_position_embeddings=128,
+    pad_token_id=tokenizer_en.pad_token_id,
+    bos_token_id=tokenizer_en.bos_token_id,
+    eos_token_id=tokenizer_en.eos_token_id,
 )
 
 # Decoder config (Sinhala) – note: add_is_decoder & cross-attention
@@ -244,6 +247,9 @@ decoder_config = BertConfig(
     num_attention_heads=4,
     intermediate_size=512,
     max_position_embeddings=128,
+    pad_token_id=tokenizer_si.pad_token_id,
+    bos_token_id=tokenizer_si.bos_token_id,
+    eos_token_id=tokenizer_si.eos_token_id,
     is_decoder=True,
     add_cross_attention=True,
 )
