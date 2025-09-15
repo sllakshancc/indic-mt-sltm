@@ -322,9 +322,23 @@ class CustomDataCollator:
 data_collator = CustomDataCollator(pad_token_id=tokenizer_si.pad_token_id)
 
 
+import sacrebleu
 
 
 
+trainer = Seq2SeqTrainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_ds,
+    eval_dataset=val_ds,
+    tokenizer=None,   # ✅ don’t pass custom tokenizer
+    data_collator=data_collator,
+)
+
+
+trainer.train()
+metrics = trainer.evaluate()
+print(metrics)
 
 
 
