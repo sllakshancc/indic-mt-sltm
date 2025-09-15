@@ -296,7 +296,30 @@ training_args = Seq2SeqTrainingArguments(
 )
 
 
+from dataclasses import dataclass
+from typing import Any, Dict, List
+import torch
 
+@dataclass
+class CustomDataCollator:
+    pad_token_id: int
+
+    def __call__(self, batch: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
+        # Stack and pad manually (your data is already padded, so this is simple)
+        input_ids = torch.stack([b["input_ids"] for b in batch])
+        attention_mask = torch.stack([b["attention_mask"] for b in batch])
+        labels = torch.stack([b["labels"] for b in batch])
+
+        # Replace padding in labels with -100 to ignore loss there
+        labels[labels == self.pad_token_id] = -100
+
+        return {
+            "input_ids": input_ids,
+            "attention_mask": attention_mask,
+            "labels": labels,
+        }
+
+data_collator = CustomDataCollator(pad_token_id=tokenizer_si.pad_token_id)
 
 
 
