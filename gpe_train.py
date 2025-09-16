@@ -324,6 +324,16 @@ data_collator = CustomDataCollator(pad_token_id=tokenizer_si.pad_token_id)
 
 import sacrebleu
 
+def compute_metrics(eval_preds):
+    preds, labels = eval_preds
+    if isinstance(preds, tuple):
+        preds = preds[0]
+
+    decoded_preds = [tokenizer_si.decode(p, skip_special_tokens=True) for p in preds]
+    decoded_labels = [tokenizer_si.decode(l, skip_special_tokens=True) for l in labels]
+
+    bleu = sacrebleu.corpus_bleu(decoded_preds, [decoded_labels], force=True)
+    return {"bleu": bleu.score}
 
 
 trainer = Seq2SeqTrainer(
