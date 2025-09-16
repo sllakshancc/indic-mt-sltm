@@ -333,6 +333,7 @@ trainer = Seq2SeqTrainer(
     eval_dataset=val_ds,
     tokenizer=None,   # ✅ don’t pass custom tokenizer
     data_collator=data_collator,
+    compute_metrics=compute_metrics
 )
 
 
