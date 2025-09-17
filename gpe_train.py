@@ -352,6 +352,34 @@ metrics = trainer.evaluate()
 print(metrics)
 
 
+import matplotlib.pyplot as plt
+
+# After training
+history = trainer.state.log_history
+
+steps = []
+train_loss = []
+eval_loss = []
+bleu = []
+
+for record in history:
+    if "loss" in record.keys() and "step" in record.keys():
+        steps.append(record["step"])
+        train_loss.append(record["loss"])
+    if "eval_loss" in record.keys():
+        eval_loss.append(record["eval_loss"])
+    if "eval_bleu" in record.keys():
+        bleu.append(record["eval_bleu"])
+
+plt.figure(figsize=(10,5))
+plt.plot(steps[:len(train_loss)], train_loss, label="Train Loss")
+if eval_loss:
+    plt.plot(steps[:len(eval_loss)], eval_loss, label="Validation Loss")
+plt.xlabel("Steps")
+plt.ylabel("Loss")
+plt.legend()
+plt.title("Training & Validation Loss")
+plt.show()
 
 
 
