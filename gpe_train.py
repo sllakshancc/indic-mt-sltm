@@ -384,6 +384,9 @@ plt.show()
 
 
 
+# Save model + trainer state
+save_path = "./gpe_translation_model"
+trainer.save_model(save_path)
 
 
 
