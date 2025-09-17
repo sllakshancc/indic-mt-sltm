@@ -381,6 +381,14 @@ plt.legend()
 plt.title("Training & Validation Loss")
 plt.show()
 
+if bleu:
+    plt.figure(figsize=(10,5))
+    plt.plot(steps[:len(bleu)], bleu, label="Validation BLEU")
+    plt.xlabel("Steps")
+    plt.ylabel("BLEU Score")
+    plt.legend()
+    plt.title("BLEU during training")
+    plt.show()
 
 
 
