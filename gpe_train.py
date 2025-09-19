@@ -407,3 +407,19 @@ shutil.make_archive('gpe_translation_model', 'zip', 'gpe_translation_model')
 files.download('gpe_translation_model.zip')
 
 
+# Pick a few sentences from validation
+for i in range(5):
+    en_sent = ds["validation"][i]["translation"]["en"]
+    ref_si = ds["validation"][i]["translation"]["si"]
+
+    # Encode English input
+    input_ids = torch.tensor([tokenizer_en.encode(en_sent, max_length=64)]).to(model.device)
+
+    # Generate translation
+    output_ids = model.generate(input_ids, max_length=64)
+    pred_si = tokenizer_si.decode(output_ids[0].tolist(), skip_special_tokens=True)
+
+    print(f"EN: {en_sent}")
+    print(f"REF: {ref_si}")
+    print(f"PRED: {pred_si}")
+    print("-" * 50)
