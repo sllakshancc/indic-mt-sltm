@@ -397,5 +397,13 @@ save_path = "./gpe_translation_model"
 trainer.save_model(save_path)
 
 
+import shutil
+from google.colab import files
+
+# Replace 'my_folder' with your folder name
+shutil.make_archive('gpe_translation_model', 'zip', 'gpe_translation_model')
+
+# Download the zip
+files.download('gpe_translation_model.zip')
 
 
