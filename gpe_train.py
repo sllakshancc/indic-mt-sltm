@@ -203,6 +203,9 @@ train_ds = ds["train"].map(
 print("Encoding validation dataset...")
 val_ds = ds["validation"].map(
     lambda x: encode_batch(x["translation"]),
+    batched=True,
+    remove_columns=["translation"],
+    batch_size=32
 )
 
 # Set format for PyTorch
