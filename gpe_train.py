@@ -198,6 +198,9 @@ class GPETokenizer:
 print("Encoding training dataset...")
 train_ds = ds["train"].map(
     lambda x: encode_batch(x["translation"]),
+    batched=True,
+    remove_columns=["translation"],
+    batch_size=32
 )
 
 print("Encoding validation dataset...")
