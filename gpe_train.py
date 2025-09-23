@@ -193,6 +193,22 @@ class GPETokenizer:
 
 
 
+max_len = 64
+
+def encode_batch(batch):
+    """Encode a batch of translations."""
+    en_texts = [item["en"] for item in batch]
+    si_texts = [item["si"] for item in batch]
+
+    # Use GPE tokenizers
+    en = tokenizer_en(en_texts, padding="max_length", truncation=True, max_length=max_len, return_tensors="pt")
+    si = tokenizer_si(si_texts, padding="max_length", truncation=True, max_length=max_len, return_tensors="pt")
+
+    return {
+        "input_ids": en["input_ids"],
+        "attention_mask": en["attention_mask"],
+        "labels": si["input_ids"]
+    }
 
 # Process datasets
 print("Encoding training dataset...")
