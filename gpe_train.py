@@ -214,6 +214,15 @@ for i, ex in enumerate(samples["translation"]):
     si_tokens = tokenizer_si.tokenize(si_sent)
     si_ids = tokenizer_si.encode(si_sent)
 
+    print(f"\nSample {i+1}")
+    print(f"EN: {en_sent}")
+    print(f"EN tokens (first 10): {en_tokens}")
+    print(f"EN IDs (first 10): {en_ids}")
+
+    print(f"SI: {si_sent}")
+    print(f"SI tokens (first 10): {si_tokens}")
+    print(f"SI IDs (first 10): {si_ids}")
+    print("-" * 60)
 
 # Test encode-decode roundtrip
 for i in range(5):
