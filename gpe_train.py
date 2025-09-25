@@ -203,6 +203,17 @@ tokenizer_si.load("si")
 num_samples = 5
 samples = ds["validation"].select(range(num_samples))
 
+for i, ex in enumerate(samples["translation"]):
+    en_sent = ex["en"]
+    si_sent = ex["si"]
+
+    # Tokenize
+    en_tokens = tokenizer_en.tokenize(en_sent)
+    en_ids = tokenizer_en.encode(en_sent)
+
+    si_tokens = tokenizer_si.tokenize(si_sent)
+    si_ids = tokenizer_si.encode(si_sent)
+
 
 # Test encode-decode roundtrip
 for i in range(5):
