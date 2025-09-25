@@ -191,6 +191,28 @@ class GPETokenizer:
 
 
 
+# Initialize tokenizers
+tokenizer_en = GPETokenizerHF(vocab_size=16000)
+tokenizer_si = GPETokenizerHF(vocab_size=16000)
+
+tokenizer_en.load("en")
+tokenizer_si.load("si")
+
+
+# Test tokenization on sample sentences
+num_samples = 5
+samples = ds["validation"].select(range(num_samples))
+
+
+# Test encode-decode roundtrip
+for i in range(5):
+    ref_si = ds["validation"][i]["translation"]["si"]
+
+    encoded = tokenizer_si.encode(ref_si)
+    decoded = tokenizer_si.decode(encoded, skip_special_tokens=True)
+
+    print(f"\nOriginal: {ref_si}")
+    print(f"Decoded:  {decoded}")
 
 
 max_len = 64
