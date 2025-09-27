@@ -188,6 +188,23 @@ class GPETokenizer:
 
 
 
+# Initialize tokenizers
+tokenizer_en = GPETokenizerHF(vocab_size=16000)
+tokenizer_si = GPETokenizerHF(vocab_size=16000)
+
+# Train English tokenizer
+print("Training English GPE tokenizer...")
+tokenizer_en.train(train_texts_en)
+
+# Train Sinhala tokenizer
+print("\nTraining Sinhala GPE tokenizer...")
+tokenizer_si.train(train_texts_si)
+
+# Save tokenizers
+tokenizer_en.save("gpe_tokenizer_en")
+tokenizer_si.save("gpe_tokenizer_si")
+
+print("\nTokenizers saved successfully!")
 
 
 
