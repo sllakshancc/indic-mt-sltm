@@ -181,6 +181,41 @@ class GPETokenizer:
 
 
 
+    def pad(self, encoded_inputs, padding=True, max_length=None, return_tensors=None, **kwargs):
+      """
+      HuggingFace-compatible pad method.
+      Can handle a single dict or a list of dicts with 'input_ids' and 'attention_mask'.
+      """
+      # Case 1: already a batch dict
+      if isinstance(encoded_inputs, dict) and "input_ids" in encoded_inputs:
+          input_ids = encoded_inputs["input_ids"]
+          attention_mask = encoded_inputs.get("attention_mask", None)
+
+
+      max_len = max_length or max(len(seq) for seq in input_ids)
+
+      padded_ids, padded_mask = [], []
+      for i, seq in enumerate(input_ids):
+          # Ensure list, not tensor
+          if isinstance(seq, torch.Tensor):
+              seq = seq.tolist()
+
+          pad_len = max_len - len(seq)
+          padded_seq = seq + [self.pad_token_id] * pad_len
+          padded_ids.append(padded_seq)
+
+          if attention_mask is not None and attention_mask[i] is not None:
+              mask_seq = attention_mask[i]
+              if isinstance(mask_seq, torch.Tensor):
+                  mask_seq = mask_seq.tolist()
+              mask_seq = mask_seq + [0] * pad_len
+          padded_mask.append(mask_seq)
+
+      result = {
+          "input_ids": torch.tensor(padded_ids) if return_tensors == "pt" else padded_ids,
+          "attention_mask": torch.tensor(padded_mask) if return_tensors == "pt" else padded_mask,
+      }
+      return result
 
 
 
