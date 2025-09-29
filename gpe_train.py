@@ -220,6 +220,15 @@ class GPETokenizer:
 
 
 
+# Extract texts for training
+train_texts_en = [ex["en"] for ex in ds["train"]["translation"]]
+train_texts_si = [ex["si"] for ex in ds["train"]["translation"]]
+
+val_texts_en = [ex["en"] for ex in ds["validation"]["translation"]]
+val_texts_si = [ex["si"] for ex in ds["validation"]["translation"]]
+
+print(f"Training samples: {len(train_texts_en)}")
+print(f"Validation samples: {len(val_texts_en)}")
 
 
 
