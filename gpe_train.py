@@ -219,6 +219,10 @@ class GPETokenizer:
 
 
 
+# Load dataset
+ds = load_dataset("Helsinki-NLP/opus-100", "en-si")
+print(f"Dataset structure: {ds}")
+print(f"Sample translation: {ds['train']['translation'][0]}")
 
 # Extract texts for training
 train_texts_en = [ex["en"] for ex in ds["train"]["translation"]]
