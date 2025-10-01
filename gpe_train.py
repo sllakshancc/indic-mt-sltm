@@ -192,6 +192,9 @@ class GPETokenizer:
           attention_mask = encoded_inputs.get("attention_mask", None)
 
 
+      if attention_mask is not None and isinstance(attention_mask, torch.Tensor):
+          attention_mask = attention_mask.tolist()
+
       max_len = max_length or max(len(seq) for seq in input_ids)
 
       padded_ids, padded_mask = [], []
