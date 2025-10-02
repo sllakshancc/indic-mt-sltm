@@ -192,6 +192,9 @@ class GPETokenizer:
           attention_mask = encoded_inputs.get("attention_mask", None)
 
 
+      # Convert tensors to lists if needed
+      if isinstance(input_ids, torch.Tensor):
+          input_ids = input_ids.tolist()
       if attention_mask is not None and isinstance(attention_mask, torch.Tensor):
           attention_mask = attention_mask.tolist()
 
