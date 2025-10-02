@@ -215,6 +215,8 @@ class GPETokenizer:
               if isinstance(mask_seq, torch.Tensor):
                   mask_seq = mask_seq.tolist()
               mask_seq = mask_seq + [0] * pad_len
+          else:
+              mask_seq = [1] * len(seq) + [0] * pad_len
           padded_mask.append(mask_seq)
 
       result = {
