@@ -191,6 +191,14 @@ class GPETokenizer:
           input_ids = encoded_inputs["input_ids"]
           attention_mask = encoded_inputs.get("attention_mask", None)
 
+      # Case 2: list of dicts (from DataCollator)
+      elif isinstance(encoded_inputs, (list, tuple)):
+          input_ids = [e["input_ids"] for e in encoded_inputs]
+          attention_mask = [e.get("attention_mask") for e in encoded_inputs]
+          if all(am is None for am in attention_mask):
+              attention_mask = None
+      else:
+          raise TypeError("Unsupported input format for pad()")
 
       # Convert tensors to lists if needed
       if isinstance(input_ids, torch.Tensor):
