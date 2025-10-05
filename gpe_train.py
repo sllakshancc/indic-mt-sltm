@@ -193,6 +193,8 @@ class GPETokenizer:
                 for g in graphemes_list:
                     if g in self.vocab_re:
                         chunk_ids.append(self.vocab_re[g])
+                if chunk_ids:
+                    ids_list.append(chunk_ids)
 
         return ids_list
 
