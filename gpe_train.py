@@ -179,6 +179,19 @@ class GPETokenizer:
 
 
 
+    def _apply_merges(self, ids):
+        """Apply learned merges to a sequence of IDs."""
+        while made_merge:
+            made_merge = False
+            new_ids = []
+            i = 0
+            while i < len(ids):
+                if i < len(ids) - 1 and (ids[i], ids[i+1]) in self.merges:
+                    new_ids.append(self.merges[(ids[i], ids[i+1])])
+                    i += 2
+                    made_merge = True
+            ids = new_ids
+        return ids
 
     def _convert_to_ids_train(self, texts):
         """Convert texts to IDs for training."""
