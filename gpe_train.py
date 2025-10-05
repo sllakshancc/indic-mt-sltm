@@ -180,6 +180,21 @@ class GPETokenizer:
 
 
 
+    def _convert_to_ids_train(self, texts):
+        """Convert texts to IDs for training."""
+        ids_list = []
+        for text in texts:
+            text_chunks = regex.findall(self.whitespace_pattern, text)
+            text_chunks = [t.replace(" ", "▁") for t in text_chunks if t.strip()]
+
+            for chunk in text_chunks:
+                graphemes_list = list(grapheme.graphemes(chunk))
+                chunk_ids = []
+                for g in graphemes_list:
+                    if g in self.vocab_re:
+                        chunk_ids.append(self.vocab_re[g])
+
+        return ids_list
 
     def pad(self, encoded_inputs, padding=True, max_length=None, return_tensors=None, **kwargs):
       """
