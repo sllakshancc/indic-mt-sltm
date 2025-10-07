@@ -190,6 +190,9 @@ class GPETokenizer:
                     new_ids.append(self.merges[(ids[i], ids[i+1])])
                     i += 2
                     made_merge = True
+                else:
+                    new_ids.append(ids[i])
+                    i += 1
             ids = new_ids
         return ids
 
