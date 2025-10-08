@@ -181,6 +181,7 @@ class GPETokenizer:
 
     def _apply_merges(self, ids):
         """Apply learned merges to a sequence of IDs."""
+        made_merge = True
         while made_merge:
             made_merge = False
             new_ids = []
