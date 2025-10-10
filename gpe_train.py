@@ -178,6 +178,17 @@ class GPETokenizer:
 
 
 
+    def _merge(self, ids, pair, idx):
+        newids = []
+        i = 0
+        while i < len(ids):
+            if i < len(ids)-1 and ids[i] == pair[0] and ids[i+1] == pair[1]:
+                newids.append(idx)
+                i += 2
+            else:
+                newids.append(ids[i])
+                i += 1
+        return newids
 
     def _apply_merges(self, ids):
         """Apply learned merges to a sequence of IDs."""
