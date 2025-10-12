@@ -175,6 +175,19 @@ class GPETokenizer:
 
 
 
+    def save(self, path):
+        """Save tokenizer to disk."""
+        os.makedirs(path, exist_ok=True)
+
+        save_dict = {
+            'vocab': self.vocab,
+            'merges': self.merges,
+            'special_tokens': self.special_tokens,
+            'vocab_size': self.vocab_size
+        }
+
+        with open(os.path.join(path, 'gpe_tokenizer.pkl'), 'wb') as f:
+            pickle.dump(save_dict, f)
 
     def load(self, path):
         """Load tokenizer from disk."""
