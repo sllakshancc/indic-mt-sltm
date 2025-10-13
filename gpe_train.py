@@ -174,6 +174,36 @@ class GPETokenizer:
 
 
 
+    def __call__(self, text, **kwargs):
+        """HuggingFace-compatible call interface."""
+
+        max_length = kwargs.get('max_length', None)
+        padding = kwargs.get('padding', False)
+        truncation = kwargs.get('truncation', False)
+        return_tensors = kwargs.get('return_tensors', None)
+
+
+        encoded = []
+        attention_masks = []
+
+        for t in text:
+            ids = self.encode(t, max_length=max_length, truncation=truncation, padding=padding)
+            encoded.append(ids)
+
+            # Create attention mask
+            mask = [1 if i != self.pad_token_id else 0 for i in ids]
+            attention_masks.append(mask)
+
+        result = {
+            'input_ids': encoded,
+            'attention_mask': attention_masks
+        }
+
+        if return_tensors == "pt":
+            result['input_ids'] = torch.tensor(result['input_ids'])
+            result['attention_mask'] = torch.tensor(result['attention_mask'])
+
+        return result
 
     def save(self, path):
         """Save tokenizer to disk."""
