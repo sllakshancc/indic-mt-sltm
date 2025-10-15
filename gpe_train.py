@@ -176,6 +176,8 @@ class GPETokenizer:
 
     def __call__(self, text, **kwargs):
         """HuggingFace-compatible call interface."""
+        if isinstance(text, str):
+            text = [text]
 
         max_length = kwargs.get('max_length', None)
         padding = kwargs.get('padding', False)
