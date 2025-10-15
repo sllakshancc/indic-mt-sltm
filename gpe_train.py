@@ -184,6 +184,8 @@ class GPETokenizer:
         truncation = kwargs.get('truncation', False)
         return_tensors = kwargs.get('return_tensors', None)
 
+        if padding == "max_length":
+            padding = True
 
         encoded = []
         attention_masks = []
