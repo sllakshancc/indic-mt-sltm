@@ -173,6 +173,10 @@ class GPETokenizer:
 
 
 
+    def tokenize(self, text):
+        """Tokenize text into subword strings."""
+        ids = self.encode(text, add_special_tokens=False)
+        return [self.vocab.get(i, self.unk_token) for i in ids]
 
     def __call__(self, text, **kwargs):
         """HuggingFace-compatible call interface."""
