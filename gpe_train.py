@@ -172,6 +172,9 @@ class GPETokenizer:
         return text.strip()
 
 
+    def __len__(self):
+        """Return vocabulary size."""
+        return len(self.vocab)
 
     def tokenize(self, text):
         """Tokenize text into subword strings."""
