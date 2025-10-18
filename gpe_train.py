@@ -171,6 +171,9 @@ class GPETokenizer:
         text = "".join(tokens).replace("▁", " ")
         return text.strip()
 
+    def batch_decode(self, ids_batch, skip_special_tokens=True):
+        """Decode batch of token IDs."""
+        return [self.decode(ids, skip_special_tokens) for ids in ids_batch]
 
     def __len__(self):
         """Return vocabulary size."""
