@@ -145,6 +145,8 @@ class GPETokenizer:
                 else:
                     ids.append(self.unk_token_id)
 
+        # Apply merges
+        ids = self._apply_merges(ids)
 
         # Add special tokens
         if add_special_tokens:
