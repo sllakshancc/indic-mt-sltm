@@ -4,14 +4,14 @@ import time
 import pickle
 import regex
 import grapheme
-import tqdm
+from tqdm.auto import tqdm
 import json
 
 
 class GPETokenizer:
     """GPE Tokenizer with HuggingFace-compatible interface"""
 
-    def __init__(self, vocab_size=5000, dummy_prefix="▁"):
+    def __init__(self, vocab_size=5000, dummy_prefix=" "):
         self.vocab_size = vocab_size
         self.dummy_prefix = dummy_prefix
 
@@ -59,9 +59,9 @@ class GPETokenizer:
 
         # Collect initial graphemes
         initial_graphemes = set()
-        for text in tqdm.tqdm(texts, desc="Collecting graphemes"):  # Limit for speed texts[:10000]
+        for text in tqdm(texts, desc="Collecting graphemes"):  # Limit for speed texts[:10000]
             text_chunks = regex.findall(self.whitespace_pattern, text)
-            text_chunks = [t.replace(" ", " ") for t in text_chunks if t.strip()]
+            text_chunks = [t.replace(' ','\u2581') for t in text_chunks if t.strip()]
 
             for chunk in text_chunks:
                 graphemes_list = list(grapheme.graphemes(chunk))
@@ -78,14 +78,13 @@ class GPETokenizer:
         print(f"Initial vocab size: {len(self.vocab)}")
 
         # Calculate number of merges needed
-        #num_merges = min(self.vocab_size - len(self.vocab), 5000)  # Cap merges for speed min(self.vocab_size - len(self.vocab), 5000)
-        num_merges = self.vocab_size - len(self.vocab)  # Cap merges for speed min(self.vocab_size - len(self.vocab), 5000)
+        num_merges = self.vocab_size - len(self.vocab)
 
         # Convert texts to IDs for merging
-        ids_list = self._convert_to_ids_train(texts)  # Limit for speed texts[:10000]
+        ids_list = self._convert_to_ids_train(texts)
 
         # Perform merges
-        for i in tqdm.tqdm(range(num_merges), desc="Merging"):
+        for i in tqdm(range(num_merges), desc="Merging"):
             stats = {}
             for chunk_ids in ids_list:
                 self._get_stats(chunk_ids, stats)
@@ -201,7 +200,7 @@ class GPETokenizer:
 
         # Process text
         text_chunks = regex.findall(self.whitespace_pattern, text)
-        text_chunks = [t.replace(" ", "▁") for t in text_chunks if t.strip()]
+        text_chunks = [t.replace(' ','\u2581') for t in text_chunks if t.strip()]
 
         ids = []
         for chunk in text_chunks:
@@ -341,7 +340,7 @@ class GPETokenizer:
         ids_list = []
         for text in texts:
             text_chunks = regex.findall(self.whitespace_pattern, text)
-            text_chunks = [t.replace(" ", "▁") for t in text_chunks if t.strip()]
+            text_chunks = [t.replace(' ','\u2581') for t in text_chunks if t.strip()]
 
             for chunk in text_chunks:
                 graphemes_list = list(grapheme.graphemes(chunk))
