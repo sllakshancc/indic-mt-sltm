@@ -241,7 +241,7 @@ class GPETokenizer:
             if i in self.vocab:
                 tokens.append(self.vocab[i])
 
-        text = "".join(tokens).replace("▁", " ")
+        text = "".join(tokens).replace('\u2581', ' ')
         return text.strip()
 
     def batch_decode(self, ids_batch, skip_special_tokens=True):
