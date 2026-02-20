@@ -5,6 +5,7 @@ import pickle
 import regex
 import grapheme
 from tqdm.auto import tqdm
+import tqdm as tqdm_module
 import json
 
 
@@ -102,8 +103,8 @@ class GPETokenizer:
             self.merges[pair] = idx
             self.vocab[idx] = self.vocab[pair[0]] + self.vocab[pair[1]]
 
-            if i % 100 == 0:
-                print(f"Merge {i}: {self.vocab[pair[0]]} + {self.vocab[pair[1]]} -> {self.vocab[idx]}")
+            if i % 1000 == 0:
+                tqdm_module.tqdm.write(f"Merge {i}: {self.vocab[pair[0]]} + {self.vocab[pair[1]]} -> {self.vocab[idx]}")
 
         # Update reverse vocab
         self.vocab_re = {v: k for k, v in self.vocab.items()}
@@ -283,7 +284,9 @@ class GPETokenizer:
         }
 
         with open(os.path.join(path, 'tokenizer_config.json'), 'w') as f:
-            json.dump(config, f)
+            json.dump(config, f, indent=2)
+        with open(os.path.join(path, 'vocab.json'), 'w', encoding='utf-8') as f:
+            json.dump(self.vocab, f, ensure_ascii=False, indent=2)
 
     def load(self, path):
         """Load tokenizer from disk."""
