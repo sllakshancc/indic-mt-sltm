@@ -1,5 +1,7 @@
 # Hugging Face cache
 hf_cache/
+tokenizers_trained/
+tokenizer_outputs/
 .cache/
 
 # Python
