@@ -245,11 +245,11 @@ trainer = Seq2SeqTrainer(
 
     args=training_args,
 
-    #train_dataset=dataset["train"],
-    train_dataset=small_train_dataset,
+    train_dataset=dataset["train"],
+    #train_dataset=small_train_dataset,
 
-    #eval_dataset=dataset["validation"],
-    eval_dataset=small_eval_dataset,
+    eval_dataset=dataset["validation"],
+    #eval_dataset=small_eval_dataset,
 
     data_collator=collate_fn,
 
