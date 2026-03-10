@@ -162,12 +162,12 @@ def compute_metrics(eval_preds):
     labels = np.where(labels != -100, labels, PAD_ID)
 
     decoded_preds = [
-        tokenizer_ta.decode(p, skip_special_tokens=True)
+        tokenizer_en.decode(p, skip_special_tokens=True)
         for p in preds
     ]
 
     decoded_labels = [
-        tokenizer_ta.decode(l, skip_special_tokens=True)
+        tokenizer_en.decode(l, skip_special_tokens=True)
         for l in labels
     ]
 
