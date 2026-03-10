@@ -258,6 +258,7 @@ trainer = Seq2SeqTrainer(
 
 print("Starting training...")
 if os.path.exists("./checkpoints") and len(os.listdir("./checkpoints")) > 0:
+    print("Resuming from checkpoint...")
     trainer.train(resume_from_checkpoint=True)
 else:
     trainer.train()
