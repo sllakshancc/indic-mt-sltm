@@ -210,8 +210,9 @@ training_args = Seq2SeqTrainingArguments(
     greater_is_better=True,
     load_best_model_at_end=True,
 
-    per_device_train_batch_size=32,
-    per_device_eval_batch_size=32,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    gradient_accumulation_steps = 2
 
     num_train_epochs=8,
 
@@ -229,7 +230,7 @@ training_args = Seq2SeqTrainingArguments(
 
     logging_steps=100,
 
-    label_smoothing_factor=0.1,
+    #label_smoothing_factor=0.1,
 
     predict_with_generate=True,
 
