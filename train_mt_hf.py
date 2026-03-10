@@ -190,7 +190,7 @@ print("Loading dataset...")
 dataset = load_dataset("Helsinki-NLP/opus-100", PAIR, cache_dir="./hf_cache")
 
 print("Preprocessing dataset...")
-dataset = dataset.map(preprocess, remove_columns=dataset["train"].column_names)
+dataset = dataset.map(preprocess, remove_columns=dataset["train"].column_names, num_proc=8)
 
 #DEBUG: Create a tiny slice of the data
 small_train_dataset = dataset["train"].select(range(100))
