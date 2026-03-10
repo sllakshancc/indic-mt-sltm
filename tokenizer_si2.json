@@ -1,0 +1,137 @@
+{
+  "version": "1.0",
+  "truncation": null,
+  "padding": null,
+  "added_tokens": [
+    {
+      "id": 0,
+      "content": "[PAD]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 1,
+      "content": "[UNK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 2,
+      "content": "[BOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 3,
+      "content": "[EOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    }
+  ],
+  "normalizer": null,
+  "pre_tokenizer": {
+    "type": "Whitespace"
+  },
+  "post_processor": null,
+  "decoder": null,
+  "model": {
+    "type": "BPE",
+    "dropout": null,
+    "unk_token": null,
+    "continuing_subword_prefix": null,
+    "end_of_word_suffix": null,
+    "fuse_unk": false,
+    "byte_fallback": false,
+    "ignore_merges": false,
+    "vocab": {
+      "[PAD]": 0,
+      "[UNK]": 1,
+      "[BOS]": 2,
+      "[EOS]": 3,
+      "!": 4,
+      ".": 5,
+      "0": 6,
+      "4": 7,
+      "?": 8,
+      "ඇ": 9,
+      "ඊ": 10,
+      "එ": 11,
+      "ක": 12,
+      "ග": 13,
+      "ච": 14,
+      "ජ": 15,
+      "ට": 16,
+      "ඩ": 17,
+      "ණ": 18,
+      "ද": 19,
+      "න": 20,
+      "ප": 21,
+      "බ": 22,
+      "ම": 23,
+      "ය": 24,
+      "ර": 25,
+      "ල": 26,
+      "ව": 27,
+      "ශ": 28,
+      "ස": 29,
+      "හ": 30,
+      "ළ": 31,
+      "ෆ": 32,
+      "්": 33,
+      "ා": 34,
+      "ැ": 35,
+      "ි": 36,
+      "ී": 37,
+      "ු": 38,
+      "ූ": 39,
+      "ෙ": 40,
+      "ේ": 41,
+      "ො": 42,
+      "ෝ": 43,
+      "න්": 44,
+      "..": 45,
+      "දි": 46,
+      "යන්": 47,
+      "රයන්": 48,
+      "සෙ": 49
+    },
+    "merges": [
+      [
+        "න",
+        "්"
+      ],
+      [
+        ".",
+        "."
+      ],
+      [
+        "ද",
+        "ි"
+      ],
+      [
+        "ය",
+        "න්"
+      ],
+      [
+        "ර",
+        "යන්"
+      ],
+      [
+        "ස",
+        "ෙ"
+      ]
+    ]
+  }
+}

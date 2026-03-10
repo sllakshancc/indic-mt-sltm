@@ -1,7 +1,7 @@
 import argparse
 import os
 from datasets import load_dataset
-from tokenizers.GPETokenizer import GPETokenizer
+from custom_tokenizers.GPETokenizer import GPETokenizer
 
 
 def parse_args():

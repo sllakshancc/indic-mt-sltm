@@ -189,6 +189,10 @@ dataset = load_dataset("Helsinki-NLP/opus-100", PAIR, cache_dir="./hf_cache")
 
 dataset = dataset.map(preprocess, remove_columns=dataset["train"].column_names)
 
+#DEBUG: Create a tiny slice of the data
+small_train_dataset = dataset["train"].select(range(100))
+small_eval_dataset = dataset["validation"].select(range(50))
+
 model = build_model()
 
 
@@ -235,9 +239,11 @@ trainer = Seq2SeqTrainer(
 
     args=training_args,
 
-    train_dataset=dataset["train"],
+    #train_dataset=dataset["train"],
+    train_dataset=small_train_dataset,
 
-    eval_dataset=dataset["validation"],
+    #eval_dataset=dataset["validation"],
+    eval_dataset=small_eval_dataset,
 
     data_collator=collate_fn,
 
