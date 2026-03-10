@@ -105,8 +105,8 @@ def preprocess(example):
     src = example["translation"][SRC_LANG]
     tgt = example["translation"][TGT_LANG]
 
-    src_ids = tokenizer_si.encode(src)[:MAX_LEN-2]
-    tgt_ids = tokenizer_ta.encode(tgt)[:MAX_LEN-2]
+    src_ids = tokenizer_si.encode(src).ids[:MAX_LEN-2]
+    tgt_ids = tokenizer_en.encode(tgt).ids[:MAX_LEN-2]
 
     src_ids = [BOS_ID] + src_ids + [EOS_ID]
     tgt_ids = [BOS_ID] + tgt_ids + [EOS_ID]
