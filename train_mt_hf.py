@@ -1,3 +1,4 @@
+import os
 import torch
 from datasets import load_dataset
 import numpy as np
@@ -256,7 +257,10 @@ trainer = Seq2SeqTrainer(
 )
 
 print("Starting training...")
-trainer.train(resume_from_checkpoint=True)
+if os.path.exists("./checkpoints") and len(os.listdir("./checkpoints")) > 0:
+    trainer.train(resume_from_checkpoint=True)
+else:
+    trainer.train()
 
 print("Saving final model...")
 trainer.save_model("./final_translation_model")
