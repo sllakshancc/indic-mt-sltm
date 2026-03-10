@@ -29,9 +29,9 @@ if torch.cuda.is_available():
     print(f"Device Name: {torch.cuda.get_device_name(0)}")
 
 
-PAIR = "si-ta"
+PAIR = "en-si"
 SRC_LANG = "si"
-TGT_LANG = "ta"
+TGT_LANG = "en"
 
 MAX_LEN = 128
 PAD_ID = 0
