@@ -42,6 +42,7 @@ EOS_ID = 3
 VOCAB_SIZE_SI = 32000
 VOCAB_SIZE_TA = 32000
 
+print("Loading tokenizers...")
 tokenizer_si = Tokenizer.from_file("./tokenizers_trained/bpe_bytelevel_si_1m_32k/tokenizer.json")
 tokenizer_en = Tokenizer.from_file("./tokenizers_trained/bpe_bytelevel_en_1m_32k/tokenizer.json")
 
@@ -185,17 +186,21 @@ def compute_metrics(eval_preds):
 # MAIN
 # =========================
 
+print("Loading dataset...")
 dataset = load_dataset("Helsinki-NLP/opus-100", PAIR, cache_dir="./hf_cache")
 
+print("Preprocessing dataset...")
 dataset = dataset.map(preprocess, remove_columns=dataset["train"].column_names)
 
 #DEBUG: Create a tiny slice of the data
 small_train_dataset = dataset["train"].select(range(100))
 small_eval_dataset = dataset["validation"].select(range(50))
 
+
+print("Building model...")
 model = build_model()
 
-
+print("creating training arguments...")
 training_args = Seq2SeqTrainingArguments(
 
     output_dir="./checkpoints",
@@ -232,7 +237,7 @@ training_args = Seq2SeqTrainingArguments(
     report_to="none"
 )
 
-
+print("Creating trainer...")
 trainer = Seq2SeqTrainer(
 
     model=model,
@@ -250,7 +255,8 @@ trainer = Seq2SeqTrainer(
     compute_metrics=compute_metrics
 )
 
-
+print("Starting training...")
 trainer.train(resume_from_checkpoint=True)
 
+print("Saving final model...")
 trainer.save_model("./final_translation_model")
