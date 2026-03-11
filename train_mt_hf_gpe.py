@@ -259,11 +259,11 @@ trainer = Seq2SeqTrainer(
 )
 
 print("Starting training...")
-if os.path.exists("./checkpoints") and len(os.listdir("./checkpoints")) > 0:
+if os.path.exists("./translation_model_si_gpe_en_bpe/checkpoints") and len(os.listdir("./translation_model_si_gpe_en_bpe/checkpoints")) > 0:
     print("Resuming from checkpoint...")
     trainer.train(resume_from_checkpoint=True)
 else:
     trainer.train()
 
 print("Saving final model...")
-trainer.save_model("./final_translation_model")
+trainer.save_model("./translation_model_si_gpe_en_bpe/final_translation_model")
