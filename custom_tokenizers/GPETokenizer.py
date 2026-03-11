@@ -190,7 +190,7 @@ class GPETokenizer:
 
         print(f"Tokenizer saved to {path}")
 
-    def encode(self, text, add_special_tokens=True, max_length=None, truncation=False, padding=False):
+    def encode(self, text, add_special_tokens=False, max_length=None, truncation=False, padding=False):
         """Encode text to token IDs."""
         if not self.trained:
             raise ValueError("Tokenizer not trained")
