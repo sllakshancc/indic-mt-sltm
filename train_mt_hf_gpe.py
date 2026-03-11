@@ -17,6 +17,7 @@ from tokenizers.trainers import BpeTrainer
 from tokenizers.pre_tokenizers import Split, ByteLevel, Whitespace, Metaspace
 from tokenizers.decoders import ByteLevel as ByteLevelDecoder
 from tokenizers.normalizers import NFKC, Sequence
+from custom_tokenizers.GPETokenizer import GPETokenizer
 
 bleu = evaluate.load("sacrebleu")
 
