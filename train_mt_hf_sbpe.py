@@ -44,8 +44,8 @@ VOCAB_SIZE_SI = 32005
 VOCAB_SIZE_TA = 32005
 
 print("Loading tokenizers...")
-tokenizer_si = Tokenizer.from_file("./tokenizers_trained/superbpe_opus_100_si_10G_20K_extend_32K/tokenizer.json")
-tokenizer_en = Tokenizer.from_file("./tokenizers_trained/superbpe_opus_100_en_10G_20K_extend_32K/tokenizer.json")
+tokenizer_si = Tokenizer.from_file("./tokenizers_trained/superbpe_opus_100_si_10G_28K_extend_32K/tokenizer.json")
+tokenizer_en = Tokenizer.from_file("./tokenizers_trained/superbpe_opus_100_en_10G_28K_extend_32K/tokenizer.json")
 
 # =========================
 # MODEL
@@ -258,11 +258,11 @@ trainer = Seq2SeqTrainer(
 )
 
 print("Starting training...")
-if os.path.exists("./super_bpe/checkpoints") and len(os.listdir("./super_bpe/checkpoints")) > 0:
+if os.path.exists("./super_bpe_28K_extend_32K/checkpoints") and len(os.listdir("./super_bpe_28K_extend_32K/checkpoints")) > 0:
     print("Resuming from checkpoint...")
     trainer.train(resume_from_checkpoint=True)
 else:
     trainer.train()
 
 print("Saving final model...")
-trainer.save_model("./super_bpe/final_translation_model")
+trainer.save_model("./super_bpe_28K_extend_32K/final_translation_model")
