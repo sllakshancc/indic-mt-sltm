@@ -1,0 +1,22 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "translation": {
+      "en": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "si": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "ta": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "homepage": "",
+  "license": ""
+}

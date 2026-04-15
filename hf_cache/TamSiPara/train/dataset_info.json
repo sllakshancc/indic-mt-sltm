@@ -1,0 +1,18 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "translation": {
+      "si": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "ta": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "homepage": "",
+  "license": ""
+}

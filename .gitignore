@@ -1,7 +1,9 @@
 # Hugging Face cache
-hf_cache/
+hf_cache/Helsinki-NLP___opus-100
+openlanguagedata___flores_plus
 #tokenizers_trained/
 tokenizer_outputs/
+models_trained/
 .cache/
 
 # Python
