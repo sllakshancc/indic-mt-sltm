@@ -6,6 +6,7 @@ tokenizer_outputs/
 models_trained/
 backup/
 .cache/
+*.arrow
 
 # Python
 __pycache__/
