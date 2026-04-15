@@ -4,6 +4,7 @@ openlanguagedata___flores_plus
 #tokenizers_trained/
 tokenizer_outputs/
 models_trained/
+backup/
 .cache/
 
 # Python
