@@ -8,6 +8,20 @@ from tqdm.auto import tqdm
 import tqdm as tqdm_module
 import json
 
+class Encoding:
+    def __init__(self, ids):
+        self.ids = ids
+
+    def __iter__(self):
+        return iter(self.ids)
+
+    def __getitem__(self, idx):
+        return self.ids[idx]
+
+    def __len__(self):
+        return len(self.ids)
+
+
 
 class GPETokenizer:
     """GPE Tokenizer with HuggingFace-compatible interface"""
@@ -228,7 +242,7 @@ class GPETokenizer:
             if len(ids) < max_length:
                 ids = ids + [self.pad_token_id] * (max_length - len(ids))
 
-        return ids
+        return Encoding(ids=ids)
 
     def decode(self, ids, skip_special_tokens=True):
         """Decode token IDs to text."""
@@ -243,7 +257,7 @@ class GPETokenizer:
                 tokens.append(self.vocab[i])
 
         text = "".join(tokens).replace('\u2581', ' ')
-        return text.strip()
+        return text
 
     def batch_decode(self, ids_batch, skip_special_tokens=True):
         """Decode batch of token IDs."""
@@ -358,4 +372,5 @@ class GPETokenizer:
                 if chunk_ids:
                     ids_list.append(chunk_ids)
 
-        return ids_list
+                return ids_list
+        
