@@ -372,5 +372,5 @@ class GPETokenizer:
                 if chunk_ids:
                     ids_list.append(chunk_ids)
 
-                return ids_list
+        return ids_list
         
